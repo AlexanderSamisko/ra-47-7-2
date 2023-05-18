@@ -19,10 +19,10 @@ function Popular(props) {
     )
 };
 
-function Abaracadabara(props) {
+function Abaracadabara({views, popular, news, children}) {
   return <>{
-    props.views > 1000 ? <Popular>{props.children}</Popular> : (
-      props.views < 100 ?  <New>{props.children}</New> : <> {props.children}</>
+    views > 1000 ? popular({children: children}) : (
+      views < 100 ? news({children: children}) : <> {children}</>
     )   
   }</>
 }
@@ -51,12 +51,12 @@ function List(props) {
         switch (item.type) {
             case 'video':
                 return (
-                  <Abaracadabara views={item.views}><Video {...item} /></Abaracadabara>
+                  <Abaracadabara views={item.views} popular={Popular} news={New}><Video {...item} /></Abaracadabara>
                 );
 
             case 'article':
                 return (
-                  <Abaracadabara views={item.views}><Article {...item} /></Abaracadabara>  
+                  <Abaracadabara views={item.views} popular={Popular} news={New}><Article {...item} /></Abaracadabara>  
                 );
         }
     });
